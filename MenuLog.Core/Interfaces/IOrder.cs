@@ -6,5 +6,9 @@ namespace MenuLog.Core.Interfaces
     {
         DateTime OrderDate { get; set; }
         double Price { get; set; } //Keeping it simple for this demo. Ignoring any GST considerations
+        double Score { get; set; }
+        int Ranking { get; set; }
+
+        IRestaurant Restaurant { get; set; }
     }
 }

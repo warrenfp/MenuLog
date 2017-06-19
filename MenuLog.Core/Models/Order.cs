@@ -7,5 +7,9 @@ namespace MenuLog.Core.Models
     {
         public DateTime OrderDate { get; set; }
         public double Price { get; set; }
+        public double Score { get; set; }
+        public int Ranking { get; set; }
+
+        public IRestaurant Restaurant { get; set; }
     }
 }

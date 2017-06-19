@@ -2,6 +2,6 @@
 {
     public interface IRankingFactory
     {
-        IRankingStrategy GetStrategy();
+        IRankingStrategy GetStrategy(string strategyName);
     }
 }

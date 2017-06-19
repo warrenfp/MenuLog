@@ -75,32 +75,32 @@ namespace MenuLog.Web.Data
                     },
                     new Order
                     {
-                        OrderDate = DateTime.UtcNow.AddDays(-6),
+                        OrderDate = DateTime.UtcNow.AddDays(-2),
                         Price = 60,
                         Restaurant = restaurants[2]
                     },
                     new Order
                     {
-                        OrderDate = DateTime.UtcNow.AddDays(-6),
+                        OrderDate = DateTime.UtcNow.AddDays(-2),
                         Price = 60,
                         Restaurant = restaurants[2]
                     },
                     new Order
                     {
-                        OrderDate = DateTime.UtcNow.AddDays(-12),
-                        Price = 60,
+                        OrderDate = DateTime.UtcNow.AddDays(-2),
+                        Price = 150,
                         Restaurant = restaurants[3]
                     },
                     new Order
                     {
-                        OrderDate = DateTime.UtcNow.AddDays(-12),
-                        Price = 60,
+                        OrderDate = DateTime.UtcNow.AddDays(-2),
+                        Price = 150,
                         Restaurant = restaurants[3]
                     },
                     new Order
                     {
-                        OrderDate = DateTime.UtcNow.AddDays(-12),
-                        Price = 60,
+                        OrderDate = DateTime.UtcNow.AddDays(-2),
+                        Price = 150,
                         Restaurant = restaurants[3]
                     },
                     new Order

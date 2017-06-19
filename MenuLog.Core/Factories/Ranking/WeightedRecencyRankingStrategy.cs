@@ -51,21 +51,21 @@ namespace MenuLog.Core.Factories.Ranking
             foreach (var order in list)
             {
                 double score = 0;
-                
+
                 var totalDays = Math.Round(DateTime.UtcNow.Subtract(order.OrderDate).TotalDays, 2);
 
                 //older order will get ranked exponentially worse on time. Orders today will get max score of 1 * recency factor
                 score += (1 / (totalDays + 1)) * RecencyFactor;
 
                 score += (PriceComparison / order.Price) * PriceFactor; //Higher priced meals would be penalized
-                score += order.CustomerRating * CustomerRatingFactor; 
-                order.Score = score;
+                score += order.CustomerRating * CustomerRatingFactor;
+                order.Score = Math.Round(score, 2);
             }
 
             //Assign the ranking
             foreach (var order in list)
             {
-                var percentage = (order.Score / ScoreComparison)*100;
+                var percentage = (order.Score / ScoreComparison) * 100;
                 order.Ranking = GetStarLevel(percentage);
             }
 

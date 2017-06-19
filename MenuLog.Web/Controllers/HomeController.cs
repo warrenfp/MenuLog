@@ -1,4 +1,5 @@
-﻿using MenuLog.Core.Interfaces;
+﻿using System.Linq;
+using MenuLog.Core.Interfaces;
 using MenuLog.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,14 @@ namespace MenuLog.Web.Controllers
 
         public IActionResult Index()
         {
-            var rankings = _ordersService.GetRestaurantByRanking();
+            //Transform to a simpler object.
+            var rankings = _ordersService.GetRestaurantsByRanking().Select(s => new RestaurantModel
+            {
+                Name = s.Name,
+                PostCode = s.Suburb.PostCode,
+                SuburbName = s.Suburb.Name,
+                Rating = s.Rating,
+            });
 
             var model = new RankingModel()
             {

@@ -5,5 +5,6 @@ namespace MenuLog.Core.Models
     public class Suburb : ISuburb
     {
         public string PostCode { get; set; }
+        public string Name { get; set; }
     }
 }

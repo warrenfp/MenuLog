@@ -5,6 +5,6 @@ namespace MenuLog.Web.ViewModels
 {
     public class RankingModel
     {
-        public IEnumerable<IRestaurant> Rankings { get; set; }
+        public IEnumerable<RestaurantModel> Rankings { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace MenuLog.Web.Services
             _rankingStrategy = rankingFactory.GetStrategy();
         }
 
-        public IEnumerable<IRestaurant> GetRestaurantByRanking()
+        public IEnumerable<IRestaurant> GetRestaurantsByRanking()
         {
             var restaurants = _data.OrderData.Select(s => s.Restaurant).Distinct().ToList();
 

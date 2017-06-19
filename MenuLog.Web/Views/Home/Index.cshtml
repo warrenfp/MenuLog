@@ -5,26 +5,28 @@
 @model MenuLog.Web.ViewModels.RankingModel
 
 <div class="row col-lg-6 col-sm-12 padded-sides">
-    
-    <h1>Current restaurant rankings</h1>
-    <br/>
-    
+
+    <h1>Current Restaurant Rankings</h1>
+    <br />
+
     <table class="table">
-        
+
         <tr>
             <td>Name</td>
             <td>Ranking</td>
             <td>Score</td>
-            <td>PostCode</td>
+            <td>Suburb</td>
+            <td>Post Code</td>
         </tr>
-        
+
         @foreach (var restaurant in Model.Rankings)
         {
             <tr>
                 <td>@restaurant.Name</td>
                 <td>@restaurant.Rating</td>
                 <td>@restaurant.Score</td>
-                <td>@restaurant.Suburb.PostCode</td>
+                <td>@restaurant.SuburbName</td>
+                <td>@restaurant.PostCode</td>
             </tr>
         }
 
@@ -33,29 +35,56 @@
 
 <div class="row col-lg-6 col-sm-12 padded-sides">
 
-    <h1>Implementation details </h1>
-    <br/>
-    (This will responsively adjust for small devices (using bootstrap styling))
-    <br/>
+    <h1>Implementation Details:</h1>
     <br />
-    A rating factory allows the developer to select their own implementation of the RankingStrategy.
+
+    <h3>Background</h3>
+
+    I've limited my time to a day for this implementation. Please see the comments within the classes as well. I have not worried too much about styling. I have focussed on creating a solution that is S.O.L.I.D.<br />
+    <br />
+    This page will responsively adjust for small devices (using bootstrap styling).
+    <br />
+    <br />
+    Scores are calculated when the home page (home/index) is visited. In a production system you would <b>NOT</b> do this. Scores would be calculated by an independant system.<br />
+    Scores need to be recalculated with time. I would setup an admin system that would allow an administrator to recalculate as desired.
+    <br />
+    <br />
+    Note: A restaurant is ranked against it's competitors. You should <b>not</b> compare a fast food restaurant against a gourmet one as their characteristics are very different from each other. Additional classification criteria should be added to distinguish between different restaurant types.
+    <br />
+    <br />
+    
+    <h3>Technical Details</h3>
+
+    A <b>rating factory</b> allows the developer to create/select their own implementation of the RankingStrategy.
     I have created a WeightedRankingStrategy. This is currently configured in the appsettings.
+    <br/>
+    Async: In this demo it was not necessary to using any asynchonous methods. I use this extensively in my other projects and would be happy to share details later.
+    <br/>
+    Although dotnet MVC is a good environment. I would still prefer to use a client-side framework such as Angular 4/React. I have a sample application available here designed with <a href="http://undertonedng.azurewebsites.net">Angular (click here to view)</a>
+    <br/>
+    Unit testing project added. I have not used any Mocking/Stubbing frameworks for this demo. 
+
+    <br/>
+    <h3>Scoring Methodology</h3>
+    The scores are calculated taking the following items into consideration:<br/><br />
+
+    <b>Recency factor: 1.5</b><br /> Most recent items will score:<br /> 1 * RecencyFactor.<br />e.g. 1 * 1.5 = 1.5<br />
     <br />
-    <h3>The scores are calculated taking the following items into consideration:</h3>
-    <br/>
-    <b>Recency factor: 1.5</b><br/> Most recent items will score:<br/> 1 * RecencyFactor.<br/>e.g. 1 * 1.5 = 1.5<br/>
-    <br/>
-    <b>Price factor: 1.0</b><br /> (the average price for OTHER restaurants is the input). Order prices less than the average will score higher<br />PriceScore * PriceFactor<br/>
-    e.g. 1 * 1.1 = 1.5
-    <br/>
+    <b>Price factor: 1.0</b><br /> The average price for OTHER restaurants is the input. Order prices less than the average will score higher<br />PriceScore * PriceFactor<br />
+    e.g. 1 * 1 = 1
+    <br />
     <br />
     <b>Customer rating factor: 0.3</b><br />
     Customer Score * CustomerRatingFactor
-    <br/>
+    <br />
     e.g. 1 * 0.3 = 0.3
-    <br/>
+    <br />
     <br />
     <b>Total Order Score = Recency Score + Price Score + Customer Rating Score</b>
-    
-    
+    <br />
+    <br />
+    <h3>Other Technologies Used:</h3>
+    Dependency injection/Inversion of control: AutoFac<br />
+    Styling: Less (Responsive layout)<br />
+
 </div>

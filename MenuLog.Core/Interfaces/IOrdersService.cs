@@ -4,6 +4,6 @@ namespace MenuLog.Core.Interfaces
 {
     public interface IOrdersService
     {
-        IEnumerable<IRestaurant> GetRestaurantByRanking();
+        IEnumerable<IRestaurant> GetRestaurantsByRanking();
     }
 }

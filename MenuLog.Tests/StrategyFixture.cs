@@ -50,6 +50,7 @@ namespace MenuLog.Tests
         public void Higher_Than_Average_Priced_Meals_Will_Be_Penalized()
         {
             var weightedRecencyStrategy = IoC.Container.ResolveNamed<IRankingStrategy>("WeightedRecencyRanking");
+            weightedRecencyStrategy.PriceComparison = 100; //This is what you use to compare as your average across all of your data
 
             var ranking1 = weightedRecencyStrategy.GetRating(new List<IOrder>
             {
@@ -62,10 +63,10 @@ namespace MenuLog.Tests
 
             var ranking2 = weightedRecencyStrategy.GetRating(new List<IOrder>
             {
-                new Order {OrderDate = DateTime.UtcNow, Price = 100,},
                 new Order {OrderDate = DateTime.UtcNow, Price = 100},
                 new Order {OrderDate = DateTime.UtcNow, Price = 100},
-                new Order {OrderDate = DateTime.UtcNow, Price = 200}, //2 overpriced meals at another restarant
+                new Order {OrderDate = DateTime.UtcNow, Price = 100},
+                new Order {OrderDate = DateTime.UtcNow, Price = 200}, 
                 new Order {OrderDate = DateTime.UtcNow, Price = 200}
             });
 

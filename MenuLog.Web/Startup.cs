@@ -2,6 +2,9 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using MenuLog.Core.Framework;
+using MenuLog.Core.Interfaces;
+using MenuLog.Web.Data;
+using MenuLog.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -37,6 +40,12 @@ namespace MenuLog.Web
 
             //Register our own services from the core library. This makes it re-usable across different project. i.e. tests
             Core.Framework.Startup.RegisterCustomTypes(builder);
+
+            services.AddSingleton<IOrdersService, OrdersService>(); //If accessing the db and a new dbcontext is necessary this should be scoped
+            services.AddSingleton<IConfiguration>(Configuration);
+
+            //Setup your database. In this case the hardcoded data will be registered at a singleton
+            builder.RegisterInstance<IDbData>(new HardCodedDemoData());
 
             builder.Populate(services);
 

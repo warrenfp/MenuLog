@@ -13,14 +13,19 @@ namespace MenuLog.Core.Factories.Ranking
     /// Assumptions:
     /// This always compares an order for 1 person. Obviously multiple people would have a higher bill which would affect the rating.
     /// 
+    /// Implementation details:
+    /// Avergage price is used at the benchmark
+    /// 
     /// </summary>
     public class WeightedRecencyRankingStrategy : IRankingStrategy
     {
         public double RecencyFactor { get; set; } = 1.5;
 
         public double PriceFactor { get; set; } = 1.0;
+        
+        public double PriceComparison { get; set; }
 
-        public int MinimumOrderAmount { get; set; } = 5; //Property initialization
+        public int MinimumOrderAmount { get; set; } = 3; //Property initialization
 
         public int GetRating(IEnumerable<IOrder> orders)
         {
@@ -28,8 +33,6 @@ namespace MenuLog.Core.Factories.Ranking
 
             if (list.Count < MinimumOrderAmount)
                 throw new ArgumentOutOfRangeException($"Please input a minimum of {MinimumOrderAmount} orders to calculate an accurate ranking");
-
-            var avergagePrice = list.Average(m => m.Price); //Let's use the average price as our benchmark
 
             //Calculate the score
             foreach (var order in list)
@@ -41,7 +44,7 @@ namespace MenuLog.Core.Factories.Ranking
                 //older order will get ranked exponentially worse on time. Orders today will get max score of 1 * recency factor
                 score += (1 / (totalDays + 1)) * RecencyFactor;
 
-                score += (avergagePrice / order.Price) * PriceFactor; //Higher priced meals would be penalized
+                score += (PriceComparison / order.Price) * PriceFactor; //Higher priced meals would be penalized
                 order.Score = score;
             }
 
@@ -57,7 +60,7 @@ namespace MenuLog.Core.Factories.Ranking
             return (int) list.Average(s => s.Ranking);
         }
 
-        private int GetStarLevel(double percentage)
+        private static int GetStarLevel(double percentage)
         {
             if (percentage > 80)
                 return 5;

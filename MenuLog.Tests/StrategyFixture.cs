@@ -21,6 +21,8 @@ namespace MenuLog.Tests
         public void More_Recent_Orders_Will_Rank_Higher()
         {
             var weightedRecencyStrategy = IoC.Container.ResolveNamed<IRankingStrategy>("WeightedRecencyRanking");
+            weightedRecencyStrategy.PriceComparison = 100; //This is what you use to compare as your average across all of your data
+            weightedRecencyStrategy.ScoreComparison = 2.5;
 
             var ranking1 = weightedRecencyStrategy.GetRating(new List<IOrder>
             {
@@ -51,6 +53,7 @@ namespace MenuLog.Tests
         {
             var weightedRecencyStrategy = IoC.Container.ResolveNamed<IRankingStrategy>("WeightedRecencyRanking");
             weightedRecencyStrategy.PriceComparison = 100; //This is what you use to compare as your average across all of your data
+            weightedRecencyStrategy.ScoreComparison = 2.5; 
 
             var ranking1 = weightedRecencyStrategy.GetRating(new List<IOrder>
             {

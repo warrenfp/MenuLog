@@ -18,14 +18,17 @@ namespace MenuLog.Web.Services
         public IEnumerable<IRestaurant> GetRestaurantByRanking()
         {
             var restaurants = _data.OrderData.Select(s => s.Restaurant).Distinct().ToList();
-            var averagePrice = _data.OrderData.Average(a => a.Price); //Across all restaurants as your benchmark
-
-            _rankingStrategy.PriceComparison = averagePrice;
 
             foreach (var restaurant in restaurants)
             {
                 if (restaurant.Rating.HasValue) //Don't recalculate
                     continue;
+
+                var averagePrice = _data.OrderData.Where(w => w.Restaurant.Name != restaurant.Name)
+                    .Average(a => a.Price); //Across all OTHER restaurants as your benchmark
+
+                _rankingStrategy.PriceComparison = averagePrice;
+                _rankingStrategy.ScoreComparison = 2.5; //This is the highest possible score per order (1.5 for recency + 1(avg) price)
 
                 var restaurantOrders = GetRestaurantOrders(restaurant.Name);
                 restaurant.Rating = _rankingStrategy.GetRating(restaurantOrders);

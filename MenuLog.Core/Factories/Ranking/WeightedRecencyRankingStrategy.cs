@@ -24,6 +24,7 @@ namespace MenuLog.Core.Factories.Ranking
         public double PriceFactor { get; set; } = 1.0;
         
         public double PriceComparison { get; set; }
+        public double ScoreComparison { get; set; }
 
         public int MinimumOrderAmount { get; set; } = 3; //Property initialization
 
@@ -48,12 +49,10 @@ namespace MenuLog.Core.Factories.Ranking
                 order.Score = score;
             }
 
-            var maxScore = list.Max(m => m.Score); //Highest score would be a 5/5 ranking
-
             //Assign the ranking
             foreach (var order in list)
             {
-                var percentage = (order.Score / maxScore)*100;
+                var percentage = (order.Score / ScoreComparison)*100;
                 order.Ranking = GetStarLevel(percentage);
             }
 

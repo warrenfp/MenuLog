@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using MenuLog.Core.Factories.Ranking;
 
 namespace MenuLog.Core.Interfaces
 {
@@ -7,6 +9,6 @@ namespace MenuLog.Core.Interfaces
         double PriceComparison { get; set; }
         double ScoreComparison { get; set; }
 
-        int GetRating(IEnumerable<IOrder> orders);
+        ScoreResult CalculateScores(IEnumerable<IOrder> orders);
     }
 }

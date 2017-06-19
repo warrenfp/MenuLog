@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MenuLog.Core.Interfaces;
+using Microsoft.Extensions.Configuration;
 
 namespace MenuLog.Core.Factories.Ranking
 {
@@ -14,21 +15,32 @@ namespace MenuLog.Core.Factories.Ranking
     /// This always compares an order for 1 person. Obviously multiple people would have a higher bill which would affect the rating.
     /// 
     /// Implementation details:
-    /// Avergage price is used at the benchmark
+    /// Average price is used as the benchmark
     /// 
     /// </summary>
     public class WeightedRecencyRankingStrategy : IRankingStrategy
     {
-        public double RecencyFactor { get; set; } = 1.5;
-
+        public double RecencyFactor { get; set; } = 1.5; //Property initialization :)
         public double PriceFactor { get; set; } = 1.0;
-        
+        public double CustomerRatingFactor { get; set; } = 0.3;
+
         public double PriceComparison { get; set; }
         public double ScoreComparison { get; set; }
 
-        public int MinimumOrderAmount { get; set; } = 3; //Property initialization
+        public int MinimumOrderAmount { get; set; } = 3;
 
-        public int GetRating(IEnumerable<IOrder> orders)
+        public WeightedRecencyRankingStrategy()
+        {
+        }
+
+        public WeightedRecencyRankingStrategy(IConfiguration configuration)
+        {
+            RecencyFactor = Convert.ToDouble(configuration["Strategies:MenuLog:RecencyFactor"]);
+            PriceFactor = Convert.ToDouble(configuration["Strategies:MenuLog:PriceFactor"]);
+            CustomerRatingFactor = Convert.ToDouble(configuration["Strategies:MenuLog:CustomerRatingFactor"]);
+        }
+
+        public ScoreResult CalculateScores(IEnumerable<IOrder> orders)
         {
             var list = orders.ToList(); //To avoid multiple enumerations through orders
 
@@ -46,6 +58,7 @@ namespace MenuLog.Core.Factories.Ranking
                 score += (1 / (totalDays + 1)) * RecencyFactor;
 
                 score += (PriceComparison / order.Price) * PriceFactor; //Higher priced meals would be penalized
+                score += order.CustomerRating * CustomerRatingFactor; 
                 order.Score = score;
             }
 
@@ -56,7 +69,11 @@ namespace MenuLog.Core.Factories.Ranking
                 order.Ranking = GetStarLevel(percentage);
             }
 
-            return (int) list.Average(s => s.Ranking);
+            return new ScoreResult
+            {
+                Stars = (int)list.Average(s => s.Ranking),
+                Score = list.Average(s => s.Score)
+            };
         }
 
         private static int GetStarLevel(double percentage)

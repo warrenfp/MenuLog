@@ -1,15 +1,20 @@
 ﻿@{
-    ViewData["Title"] = "Restuarant rankings";
+    ViewData["Title"] = "Restaurant rankings";
 }
 
 @model MenuLog.Web.ViewModels.RankingModel
 
-<div>
-    <table>
+<div class="row col-lg-6 col-sm-12 padded-sides">
+    
+    <h1>Current restaurant rankings</h1>
+    <br/>
+    
+    <table class="table">
         
         <tr>
             <td>Name</td>
             <td>Ranking</td>
+            <td>Score</td>
             <td>PostCode</td>
         </tr>
         
@@ -18,9 +23,39 @@
             <tr>
                 <td>@restaurant.Name</td>
                 <td>@restaurant.Rating</td>
+                <td>@restaurant.Score</td>
                 <td>@restaurant.Suburb.PostCode</td>
             </tr>
         }
 
     </table>
+</div>
+
+<div class="row col-lg-6 col-sm-12 padded-sides">
+
+    <h1>Implementation details </h1>
+    <br/>
+    (This will responsively adjust for small devices (using bootstrap styling))
+    <br/>
+    <br />
+    A rating factory allows the developer to select their own implementation of the RankingStrategy.
+    I have created a WeightedRankingStrategy. This is currently configured in the appsettings.
+    <br />
+    <h3>The scores are calculated taking the following items into consideration:</h3>
+    <br/>
+    <b>Recency factor: 1.5</b><br/> Most recent items will score:<br/> 1 * RecencyFactor.<br/>e.g. 1 * 1.5 = 1.5<br/>
+    <br/>
+    <b>Price factor: 1.0</b><br /> (the average price for OTHER restaurants is the input). Order prices less than the average will score higher<br />PriceScore * PriceFactor<br/>
+    e.g. 1 * 1.1 = 1.5
+    <br/>
+    <br />
+    <b>Customer rating factor: 0.3</b><br />
+    Customer Score * CustomerRatingFactor
+    <br/>
+    e.g. 1 * 0.3 = 0.3
+    <br/>
+    <br />
+    <b>Total Order Score = Recency Score + Price Score + Customer Rating Score</b>
+    
+    
 </div>

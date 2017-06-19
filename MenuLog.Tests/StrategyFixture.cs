@@ -24,7 +24,7 @@ namespace MenuLog.Tests
             weightedRecencyStrategy.PriceComparison = 100; //This is what you use to compare as your average across all of your data
             weightedRecencyStrategy.ScoreComparison = 2.5;
 
-            var ranking1 = weightedRecencyStrategy.GetRating(new List<IOrder>
+            var ranking1 = weightedRecencyStrategy.CalculateScores(new List<IOrder>
             {
                 new Order {OrderDate = DateTime.UtcNow, Price = 100},
                 new Order {OrderDate = DateTime.UtcNow, Price = 100},
@@ -33,7 +33,7 @@ namespace MenuLog.Tests
                 new Order {OrderDate = DateTime.UtcNow, Price = 100},
             });
 
-            var ranking2 = weightedRecencyStrategy.GetRating(new List<IOrder>
+            var ranking2 = weightedRecencyStrategy.CalculateScores(new List<IOrder>
             {
                 new Order {OrderDate = DateTime.UtcNow, Price = 100},
                 new Order {OrderDate = DateTime.UtcNow, Price = 100},
@@ -42,10 +42,10 @@ namespace MenuLog.Tests
                 new Order {OrderDate = DateTime.UtcNow.AddDays(-1), Price = 100}
             });
 
-            Assert.IsTrue(ranking1 > ranking2, "Ranking 1 set is expected to be higher than ranking 2 set");
+            Assert.IsTrue(ranking1.Stars > ranking2.Stars, "Ranking 1 set is expected to be higher than ranking 2 set");
 
-            Assert.AreEqual(5, ranking1, "Expected ranking 1 to be 5 stars");
-            Assert.AreEqual(4, ranking2, "Expected ranking 2 to be 4 stars");
+            Assert.AreEqual(5, ranking1.Stars, "Expected ranking 1 to be 5 stars");
+            Assert.AreEqual(4, ranking2.Stars, "Expected ranking 2 to be 4 stars");
         }
 
         [TestMethod]
@@ -55,7 +55,7 @@ namespace MenuLog.Tests
             weightedRecencyStrategy.PriceComparison = 100; //This is what you use to compare as your average across all of your data
             weightedRecencyStrategy.ScoreComparison = 2.5; 
 
-            var ranking1 = weightedRecencyStrategy.GetRating(new List<IOrder>
+            var ranking1 = weightedRecencyStrategy.CalculateScores(new List<IOrder>
             {
                 new Order {OrderDate = DateTime.UtcNow, Price = 100},
                 new Order {OrderDate = DateTime.UtcNow, Price = 100},
@@ -64,7 +64,7 @@ namespace MenuLog.Tests
                 new Order {OrderDate = DateTime.UtcNow, Price = 100},
             });
 
-            var ranking2 = weightedRecencyStrategy.GetRating(new List<IOrder>
+            var ranking2 = weightedRecencyStrategy.CalculateScores(new List<IOrder>
             {
                 new Order {OrderDate = DateTime.UtcNow, Price = 100},
                 new Order {OrderDate = DateTime.UtcNow, Price = 100},
@@ -73,10 +73,10 @@ namespace MenuLog.Tests
                 new Order {OrderDate = DateTime.UtcNow, Price = 200}
             });
 
-            Assert.IsTrue(ranking1 > ranking2, "Ranking 1 set is expected to be higher than ranking 2 set");
+            Assert.IsTrue(ranking1.Stars > ranking2.Stars, "Ranking 1 set is expected to be higher than ranking 2 set");
 
-            Assert.AreEqual(5, ranking1, "Expected ranking 1 to be 5 stars");
-            Assert.AreEqual(4, ranking2, "Expected ranking 2 to be 4 stars");
+            Assert.AreEqual(5, ranking1.Stars, "Expected ranking 1 to be 5 stars");
+            Assert.AreEqual(4, ranking2.Stars, "Expected ranking 2 to be 4 stars");
         }
 
         [TestMethod]
@@ -85,7 +85,7 @@ namespace MenuLog.Tests
         {
             var weightedRecencyStrategy = IoC.Container.ResolveNamed<IRankingStrategy>("WeightedRecencyRanking");
 
-            weightedRecencyStrategy.GetRating(new List<IOrder>
+            weightedRecencyStrategy.CalculateScores(new List<IOrder>
             {
                 new Order {OrderDate = DateTime.UtcNow, Price = 100},
                 new Order {OrderDate = DateTime.UtcNow, Price = 100},

@@ -11,6 +11,10 @@
   <PropertyGroup>
     <UserSecretsId>aspnet-MenuLog.Web-23dd58e2-79f4-4916-9c61-f56b9e166ca3</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\css\Main.less" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.1.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />

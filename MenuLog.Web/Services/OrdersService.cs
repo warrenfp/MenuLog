@@ -31,10 +31,14 @@ namespace MenuLog.Web.Services
                 _rankingStrategy.ScoreComparison = 2.5; //This is the highest possible score per order (1.5 for recency + 1(avg) price)
 
                 var restaurantOrders = GetRestaurantOrders(restaurant.Name);
-                restaurant.Rating = _rankingStrategy.GetRating(restaurantOrders);
+                var scores = _rankingStrategy.CalculateScores(restaurantOrders);
+
+                restaurant.Rating = scores.Stars;
+                restaurant.Score = scores.Score;
             }
             
-            return restaurants.OrderByDescending(o => o.Rating);
+            return restaurants.OrderByDescending(o => o.Score)
+                .ThenByDescending(s => s.Rating);
         }
 
         private IEnumerable<IOrder> GetRestaurantOrders(string name)

@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MenuLog.Web", "MenuLog.Web\MenuLog.Web.csproj", "{617F1D0A-E7ED-4013-AE62-CF284C5FAAFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MenuLog.Web", "MenuLog.Web\MenuLog.Web.csproj", "{617F1D0A-E7ED-4013-AE62-CF284C5FAAFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MenuLog.Core", "MenuLog.Core\MenuLog.Core.csproj", "{76FFFFD2-3ECD-49F6-A36B-C146623264C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MenuLog.Core", "MenuLog.Core\MenuLog.Core.csproj", "{76FFFFD2-3ECD-49F6-A36B-C146623264C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MenuLog.Tests", "MenuLog.Tests\MenuLog.Tests.csproj", "{828AB76B-E2AD-4CF3-A814-235077F51D9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{76FFFFD2-3ECD-49F6-A36B-C146623264C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76FFFFD2-3ECD-49F6-A36B-C146623264C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76FFFFD2-3ECD-49F6-A36B-C146623264C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{828AB76B-E2AD-4CF3-A814-235077F51D9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{828AB76B-E2AD-4CF3-A814-235077F51D9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{828AB76B-E2AD-4CF3-A814-235077F51D9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{828AB76B-E2AD-4CF3-A814-235077F51D9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

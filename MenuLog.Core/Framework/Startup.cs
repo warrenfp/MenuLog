@@ -8,7 +8,7 @@ namespace MenuLog.Core.Framework
     {
         public static void RegisterCustomTypes(ContainerBuilder containerBuilder)
         {
-            //Our imlementation of the the Default ranking factory
+            //Our implementation of the the Default ranking factory
             containerBuilder
                 .RegisterType<MenuLogRankingFactory>()
                 .As<IRankingFactory>();

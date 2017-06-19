@@ -23,6 +23,7 @@ namespace MenuLog.Web.Controllers
                 PostCode = s.Suburb.PostCode,
                 SuburbName = s.Suburb.Name,
                 Rating = s.Rating,
+                Score = s.Score
             });
 
             var model = new RankingModel()

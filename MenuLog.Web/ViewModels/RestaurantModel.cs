@@ -4,7 +4,6 @@ namespace MenuLog.Web.ViewModels
 {
     public class RestaurantModel
     {
-        [DisplayFormat(DataFormatString = "{0:00}")]
         public string Name { get; set; }
         
         public string SuburbName { get; set; }
